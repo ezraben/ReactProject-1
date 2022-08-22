@@ -1,13 +1,22 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import Joi from "joi-browser";
+import jwt_decode from "jwt-decode";
+import { useHistory } from "react-router-dom";
+//
 
 import axios from "axios";
 
 import loginSchema from "../../validation/login.validation";
+import { authActions } from "../../store/auth";
+import auth from "../../store/auth";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const handelEmail = (ev) => {
     setEmail(ev.target.value);
@@ -27,13 +36,18 @@ const LoginPage = () => {
 
       //invalid email
       //invalid password
-    } else {
-      // if (email && password) {
+    }
+    // else {
+    if (email && password) {
       axios
         .post("/auth", { email, password })
         .then(({ data }) => {
           console.log("data", data);
           localStorage.setItem("token", data.token);
+          dispatch(authActions.login());
+          console.log("token decoded", jwt_decode(data.token));
+          dispatch(authActions.upDateUserData(jwt_decode(data.token)));
+          history.push("/deshbord");
         })
         .catch((err) => {
           console.log("err from axios", err);

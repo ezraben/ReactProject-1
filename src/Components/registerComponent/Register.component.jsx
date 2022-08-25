@@ -1,8 +1,11 @@
 import { useState } from "react";
+// import { useEffect } from "react";
+// import { useSelector } from "react-redux";
 import Joi from "joi-browser";
 import axios from "axios";
-
 import { toast } from "react-toastify";
+
+// import { useDispatch } from "react-redux";
 
 import registerSchema from "../../validation/register.validation";
 
@@ -12,6 +15,12 @@ const RegisterComponent = () => {
   const [email, setEmail] = useState("");
   const [password, SetPassword] = useState("");
   const [confirmPassword, SetConfirmPassword] = useState("");
+  // const [emailErrMsg, setEmailErrMsg] = useState("");
+
+  // const dispatch = useDispatch();
+  // const checkBoxChecked = useSelector(
+  //   (state) => state.isBizAccount.UpDateCheckedBox
+  // );
 
   const handleNameChange = (ev) => {
     setName(ev.target.value);
@@ -19,6 +28,8 @@ const RegisterComponent = () => {
   const handleEmailChange = (ev) => {
     setEmail(ev.target.value);
   };
+  // let handelEmailErrMsg = (ev) => {};
+
   const handlePasswordChange = (ev) => {
     SetPassword(ev.target.value);
   };
@@ -27,7 +38,13 @@ const RegisterComponent = () => {
   };
   const handelCheckButton = (ev) => {
     setIsBiz(ev.target.checked);
-    // console.log(ev.target.checked);
+    console.log(ev.target.checked);
+
+    // console.log(dispatch(isBizActions));
+
+    // useEffect(() => {
+    //   dispatch(isBizActions.register());
+    // }, []);
   };
 
   const handelSubmit = (ev) => {
@@ -79,19 +96,42 @@ const RegisterComponent = () => {
         })
         .catch((err) => {
           console.log("err from axios", err);
-          let errorArr = [err.response.data.errors];
-          for (let i = 0; i < errorArr.length; i++) {
-            //the toast is working but error in console about promise
-            // toast.error(err.response.data.errors[i], {
-            //   position: "top-right",
-            //   autoClose: 5000,
-            //   hideProgressBar: false,
-            //   closeOnClick: true,
-            //   pauseOnHover: true,
-            //   draggable: true,
-            //   progress: undefined,
-            // });
+          if (err.message) {
+            console.log(err.message);
+
+            toast.error(
+              err.message,
+
+              {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              }
+            );
           }
+          if (err.response.data.message) {
+            // setEmailErrMsg(err.response.data.message);
+
+            toast.error(
+              err.response.data.message,
+
+              {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              }
+            );
+          }
+
+          console.log(err.response.data.message);
         });
     }
   };
@@ -109,7 +149,6 @@ const RegisterComponent = () => {
             value={name}
           />
         </div>
-
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">
             Email address
@@ -123,6 +162,18 @@ const RegisterComponent = () => {
             value={email}
           />
         </div>
+        {
+          // <div
+          //   className="alert alert-warning"
+          //   // onChange={handelEmailErrMsg}
+          //   // value={emailErrMsg}
+          // ></div>
+        }
+
+        {/* for email elready exists msg
+         {email === emailMasgError && (
+          <div className="alert alert-warning">already exsist</div>
+        )} */}
 
         <div className="mb-3">
           <label htmlFor="password" className="form-label">
@@ -136,9 +187,10 @@ const RegisterComponent = () => {
           />
         </div>
         {password.length > 0 && password.length < 8 && (
-          <h3>password must be at least 8 characters</h3>
+          <div className="alert alert-warning">
+            password must be at least 8 characters
+          </div>
         )}
-
         <div className="mb-3">
           <label htmlFor="ConfirmPassword" className="form-label">
             Confirm Password
@@ -150,7 +202,11 @@ const RegisterComponent = () => {
             value={confirmPassword}
           />
         </div>
-
+        {confirmPassword.length > 3 && confirmPassword !== password && (
+          <div className="alert alert-warning">
+            password and confirm password must match
+          </div>
+        )}
         <div className="mb-3 form-check">
           <input
             type="checkbox"
@@ -160,7 +216,7 @@ const RegisterComponent = () => {
             checked={biz}
           />
           <label className="form-check-label" htmlFor="exampleCheck1">
-            Check me out
+            Check this box if you want to create a business account
           </label>
         </div>
         <button type="submit" className="btn btn-primary">

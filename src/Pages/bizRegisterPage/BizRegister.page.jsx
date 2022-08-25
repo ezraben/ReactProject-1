@@ -3,7 +3,7 @@ import RegisterComponent from "../../Components/registerComponent/Register.compo
 const BizRegisterPage = () => {
   return (
     <div>
-      <h1>biz register</h1>
+      <h1>biz registerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr</h1>
       <RegisterComponent />
       <button className="btn btn-success">Create biz card</button>
     </div>

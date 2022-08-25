@@ -2,7 +2,9 @@ import { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
-const NavBarComponent = () => {
+import FooterCss from "./footerCss.css";
+
+const FooterComponent = () => {
   const loggedIn = useSelector((state) => state.auth.loggedIn);
   const userData = useSelector((state) => state.auth.userData);
 
@@ -10,19 +12,14 @@ const NavBarComponent = () => {
     if (userData.email && userData.biz === true) {
       return (
         <Fragment>
-          <li className="nav-item">
-            <NavLink className="nav-link bg-primary" to="/">
-              {userData.email} is connected
+          {/* <li className="nav-item">
+            <NavLink className="nav-link" to="/">
+              {userData.email}
             </NavLink>
-          </li>
+          </li> */}
           <li className="nav-item">
-            <NavLink className="nav-link" to="/deshbord">
+            <NavLink className="nav-link" to="deshbord">
               Dashbord
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/about">
-              about
             </NavLink>
           </li>
           <li className="nav-item">
@@ -31,7 +28,12 @@ const NavBarComponent = () => {
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link bg-danger" to="/logOut">
+            <NavLink className="nav-link" to="/about">
+              about
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/logOut">
               LogOut
             </NavLink>
           </li>
@@ -41,21 +43,20 @@ const NavBarComponent = () => {
     if (userData.email && userData.biz === false) {
       return (
         <Fragment>
+          {/* <li className="nav-item">
+            <NavLink className="nav-link" to="/">
+              {userData.email}
+            </NavLink>
+          </li> */}
+
           <li className="nav-item">
-            <NavLink className="nav-link bg-primary" to="/">
-              {userData.email} is connected
+            <NavLink className="nav-link" to="/logOut">
+              LogOut
             </NavLink>
           </li>
-
           <li className="nav-item">
             <NavLink className="nav-link" to="/about">
               about
-            </NavLink>
-          </li>
-
-          <li className="nav-item">
-            <NavLink className="nav-link bg-danger" to="/logOut">
-              LogOut
             </NavLink>
           </li>
         </Fragment>
@@ -64,24 +65,14 @@ const NavBarComponent = () => {
       return (
         <Fragment>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/login">
+            <NavLink className="nav-link" to="login">
               Login
             </NavLink>
           </li>
 
           <li className="nav-item">
-            <NavLink className="nav-link" to="/register">
+            <NavLink className="nav-link" to="register">
               Register
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/bizRegister">
-              bizRegister
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/about">
-              About us
             </NavLink>
           </li>
         </Fragment>
@@ -91,7 +82,7 @@ const NavBarComponent = () => {
   return (
     // <div>
     <nav
-      className={`navbar navbar-expand-lg navbar-light ${
+      className={`navbar navbar-expand-lg navbar-light footer ${
         loggedIn ? "bg-success" : "bg-danger"
       } `}
     >
@@ -99,7 +90,6 @@ const NavBarComponent = () => {
         <NavLink className="navbar-brand" to="/">
           Navbar
         </NavLink>
-
         <button
           className="navbar-toggler"
           type="button"
@@ -111,7 +101,6 @@ const NavBarComponent = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">{showLoggedIn()}</ul>
         </div>
@@ -121,4 +110,4 @@ const NavBarComponent = () => {
   );
 };
 
-export default NavBarComponent;
+export default FooterComponent;

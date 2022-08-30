@@ -41,7 +41,6 @@ const EditCardComponent = (props) => {
     setBizImage(ev.target.value);
   };
   const handelSubmit = (ev) => {
-    console.log("kdh");
     ev.preventDefault();
   };
   const handeleConfirmClick = () => {
@@ -106,7 +105,7 @@ const EditCardComponent = (props) => {
     ev.stopPropagation();
   };
   return (
-    <div className="mainContainer" onClick={handeleCancelClick}>
+    <div className="mainContainer container-fluid" onClick={handeleCancelClick}>
       <form
         className="editPopUpContainer"
         onSubmit={handelSubmit}

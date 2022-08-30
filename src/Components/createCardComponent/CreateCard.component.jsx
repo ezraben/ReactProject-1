@@ -18,17 +18,19 @@ const CreatecardComponent = ({
     onDelete(_id);
   };
   return (
-    <div>
-      <div className="card">
+    <div className="container-fluid">
+      <div className="card ">
         <img src={bizImage} className="card-img-top" alt="Card image cap" />
         <div className="card-body">
-          <h5 className="card-title">{bizName}</h5>
-          <p className="card-text">{bizDescription}</p>
+          <h5 className="card-title">Busines Name: {bizName}</h5>
+          <p className="card-text">Description: {bizDescription}</p>
           <ul className="list-group list-group-flush">
-            <li className="list-group-item">{bizAddress}</li>
-            <li className="list-group-item">{bizPhone}</li>
+            <li className="list-group-item">Address: {bizAddress}</li>
+            <li className="list-group-item">Phone Number: {bizPhone}</li>
           </ul>
-          <div className="d-flex p-2 justify-content-around">
+
+          <div className="d-grid gap-2">
+            {/* <div className="d-flex p-2 justify-content-around"> */}
             <button
               href="#"
               className="btn btn-warning"

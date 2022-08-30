@@ -1,17 +1,21 @@
 import { useState } from "react";
 import { useEffect } from "react";
 
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Joi from "joi-browser";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import BizRegisterPage from "../../Pages/bizRegisterPage/BizRegister.page";
 
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import jwt_decode from "jwt-decode";
 
 import registerSchema from "../../validation/register.validation";
 import registerComponentCss from "./registerComponentCss.css";
+import NavBarComponent from "../navBar/NavBar.component";
+
+import { authActions } from "../../store/auth";
 
 const RegisterComponent = (props) => {
   const [biz, setIsBiz] = useState(false);
@@ -21,7 +25,11 @@ const RegisterComponent = (props) => {
   const [confirmPassword, SetConfirmPassword] = useState("");
   const [showBizCheckBox, setShowBizCheckBox] = useState(false);
 
+  const loggedIn = useSelector((state) => state.auth.loggedIn);
+  const userData = useSelector((state) => state.auth.userData);
+
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleNameChange = (ev) => {
     setName(ev.target.value);
@@ -85,6 +93,34 @@ const RegisterComponent = (props) => {
         })
         .then((data) => {
           console.log("data from axios", data);
+          //
+          axios
+            .post("/auth", { email, password })
+            .then(({ data }) => {
+              // console.log("dataaa", data);
+              localStorage.setItem("token", data.token);
+              dispatch(authActions.login());
+              console.log("token decoded", jwt_decode(data.token));
+              dispatch(authActions.upDateUserData(jwt_decode(data.token)));
+
+              // dispatch(authActions.onLoginCheckBiz(jwt_decode(data.token)));
+              // console.log("bizState", bizState.biz);
+            })
+            .catch((err) => {
+              console.log("err from axios", err);
+              toast.error(err.response.data.message, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              });
+            });
+
+          //
+
           toast.success("🦄 User registered successfully!", {
             position: "top-right",
             autoClose: 5000,
@@ -94,6 +130,14 @@ const RegisterComponent = (props) => {
             draggable: true,
             progress: undefined,
           });
+
+          // if (userData.biz === false) {
+          //   console.log("userData.biz === false", userData.biz);
+          // }
+          // if (userData.biz === true) {
+          //   console.log("userData.biz === true", userData.biz);
+          // }
+
           if (biz === true) {
             history.push("/createCard");
           }
@@ -245,22 +289,25 @@ const RegisterComponent = (props) => {
 };
 
 export default RegisterComponent;
-////////////////////////////////////////////////////////
-// with chck box wotkingggggg
+
+///////////////////////////////////////////////////////////
+//from here with green nave at register no token
 // import { useState } from "react";
 // import { useEffect } from "react";
 
-// // import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 // import Joi from "joi-browser";
 // import { useHistory } from "react-router-dom";
 // import axios from "axios";
 // import { toast } from "react-toastify";
 // import BizRegisterPage from "../../Pages/bizRegisterPage/BizRegister.page";
 
-// // import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
+// import jwt_decode from "jwt-decode";
 
 // import registerSchema from "../../validation/register.validation";
 // import registerComponentCss from "./registerComponentCss.css";
+// import { authActions } from "../../store/auth";
 
 // const RegisterComponent = (props) => {
 //   const [biz, setIsBiz] = useState(false);
@@ -270,7 +317,11 @@ export default RegisterComponent;
 //   const [confirmPassword, SetConfirmPassword] = useState("");
 //   const [showBizCheckBox, setShowBizCheckBox] = useState(false);
 
+//   const loggedIn = useSelector((state) => state.auth.loggedIn);
+//   const userData = useSelector((state) => state.auth.userData);
+
 //   const history = useHistory();
+//   const dispatch = useDispatch();
 
 //   const handleNameChange = (ev) => {
 //     setName(ev.target.value);
@@ -334,6 +385,13 @@ export default RegisterComponent;
 //         })
 //         .then((data) => {
 //           console.log("data from axios", data);
+
+//           // if (userData.biz === false) {
+//           //   console.log("userData.biz === false", userData.biz);
+//           // }
+//           // if (userData.biz === true) {
+//           //   console.log("userData.biz === true", userData.biz);
+//           // }
 //           toast.success("🦄 User registered successfully!", {
 //             position: "top-right",
 //             autoClose: 5000,
@@ -343,6 +401,17 @@ export default RegisterComponent;
 //             draggable: true,
 //             progress: undefined,
 //           });
+//           if (userData.biz === false) {
+//             console.log("userData.biz === false", userData.biz);
+//           }
+//           if (userData.biz === true) {
+//             console.log("userData.biz === true", userData.biz);
+//           }
+//           localStorage.setItem("token", data.token);
+//           dispatch(authActions.login());
+//           console.log("token decoded", jwt_decode(data.token));
+//           dispatch(authActions.upDateUserData(jwt_decode(data.token)));
+
 //           if (biz === true) {
 //             history.push("/createCard");
 //           }
@@ -423,12 +492,10 @@ export default RegisterComponent;
 //           //   // value={emailErrMsg}
 //           // ></div>
 //         }
-
 //         {/* for email elready exists msg
 //          {email === emailMasgError && (
 //           <div className="alert alert-warning">already exsist</div>
 //         )} */}
-
 //         <div className="mb-3">
 //           <label htmlFor="password" className="form-label">
 //             Password
@@ -461,7 +528,6 @@ export default RegisterComponent;
 //             password and confirm password must match
 //           </div>
 //         )}
-
 //         <div
 //           className={`mb-3 form-check ${
 //             props.showBizCheckBox ? "" : "d-none"
@@ -479,9 +545,18 @@ export default RegisterComponent;
 //           </label>
 //         </div>
 
-//         <button type="submit" className="btn btn-primary">
+//         <button
+//           type="submit"
+//           className={`btn btn-primary ${
+//             props.showBizCheckBox ? "d-none" : ""
+//           }  `}
+//         >
 //           Submit
 //         </button>
+
+//         {props.showBizCheckBox && biz === true && (
+//           <button className="btn btn-primary"> submittt</button>
+//         )}
 //       </form>
 //     </div>
 //   );

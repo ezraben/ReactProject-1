@@ -97,7 +97,7 @@ const NavBarComponent = () => {
     >
       <div className="container-fluid">
         <NavLink className="navbar-brand" to="/">
-          Navbar
+          Home
         </NavLink>
 
         <button

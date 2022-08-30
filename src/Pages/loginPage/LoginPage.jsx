@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+
 import Joi from "joi-browser";
 import jwt_decode from "jwt-decode";
 import { useHistory } from "react-router-dom";
@@ -113,7 +114,7 @@ const LoginPage = () => {
         />
       </div>
 
-      <div className="mb-3 form-check">
+      {/* <div className="mb-3 form-check">
         <input
           type="checkbox"
           className="form-check-input"
@@ -122,7 +123,7 @@ const LoginPage = () => {
         <label className="form-check-label" htmlFor="exampleCheck1">
           Check me out
         </label>
-      </div>
+      </div> */}
       <button className="btn btn-primary">Submit</button>
     </form>
   );

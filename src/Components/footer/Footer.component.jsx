@@ -88,7 +88,7 @@ const FooterComponent = () => {
     >
       <div className="container-fluid">
         <NavLink className="navbar-brand" to="/">
-          Navbar
+          Home
         </NavLink>
         <button
           className="navbar-toggler"

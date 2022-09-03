@@ -1,0 +1,10 @@
+.card {
+  margin: 2rem;
+}
+.col-4 {
+  margin-bottom: 1.5rem;
+}
+.noCardMsg {
+  text-align: center;
+  margin-top: 10vh;
+}

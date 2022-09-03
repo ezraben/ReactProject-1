@@ -1,0 +1,19 @@
+.connected {
+  background-color: rgb(147, 247, 247);
+}
+
+.notConected {
+  background-color: rgb(212, 65, 180);
+}
+.isConnected {
+  background-color: #45edb8;
+}
+.logOut {
+  background-color: #ff8370;
+}
+#ulItemsNaveBar {
+  justify-content: space-between;
+}
+#homeLink {
+  margin-right: 5vw;
+}

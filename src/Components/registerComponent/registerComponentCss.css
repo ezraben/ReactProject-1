@@ -1,3 +1,9 @@
+h1 {
+  text-align: center;
+}
 .hideCheckBtn {
   display: none;
+}
+.form-check-label {
+  font-size: 0.75rem;
 }

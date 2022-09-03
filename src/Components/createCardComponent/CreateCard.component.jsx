@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
+
 const CreatecardComponent = ({
   bizName,
   bizDescription,
@@ -18,9 +19,13 @@ const CreatecardComponent = ({
     onDelete(_id);
   };
   return (
-    <div className="container-fluid">
+    <div className="container">
       <div className="card ">
-        <img src={bizImage} className="card-img-top" alt="Card image cap" />
+        <img
+          src={bizImage}
+          className="card-img-top"
+          alt={`photo of ${bizName}`}
+        />
         <div className="card-body">
           <h5 className="card-title">Busines Name: {bizName}</h5>
           <p className="card-text">Description: {bizDescription}</p>
@@ -30,20 +35,10 @@ const CreatecardComponent = ({
           </ul>
 
           <div className="d-grid gap-2">
-            {/* <div className="d-flex p-2 justify-content-around"> */}
-            <button
-              href="#"
-              className="btn btn-warning"
-              onClick={hendeleEditBtnClick}
-            >
+            <button className="btn btn-warning" onClick={hendeleEditBtnClick}>
               <FontAwesomeIcon icon={faPencil} /> Edit
             </button>
-            <button
-              href="#"
-              className="btn btn-danger"
-              onClick={hendelDeleteBtnClick}
-              // _id
-            >
+            <button className="btn btn-danger" onClick={hendelDeleteBtnClick}>
               <FontAwesomeIcon icon={faTrash} /> Delete
             </button>
           </div>

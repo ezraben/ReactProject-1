@@ -1,6 +1,11 @@
 import { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
+
+import navCss from "./navCss.css";
 
 const NavBarComponent = () => {
   const loggedIn = useSelector((state) => state.auth.loggedIn);
@@ -11,7 +16,7 @@ const NavBarComponent = () => {
       return (
         <Fragment>
           <li className="nav-item">
-            <NavLink className="nav-link bg-primary" to="/">
+            <NavLink className="nav-link isConnected" to="/">
               {userData.email} is connected
             </NavLink>
           </li>
@@ -30,8 +35,9 @@ const NavBarComponent = () => {
               createCard
             </NavLink>
           </li>
-          <li className="nav-item">
-            <NavLink className="nav-link bg-danger" to="/logOut">
+          <li className="nav-item ">
+            <NavLink className="nav-link logOut" to="/logOut">
+              <FontAwesomeIcon icon={faArrowRightFromBracket} />
               LogOut
             </NavLink>
           </li>
@@ -42,7 +48,7 @@ const NavBarComponent = () => {
       return (
         <Fragment>
           <li className="nav-item">
-            <NavLink className="nav-link bg-primary" to="/">
+            <NavLink className="nav-link isConnected " to="/">
               {userData.email} is connected
             </NavLink>
           </li>
@@ -53,8 +59,8 @@ const NavBarComponent = () => {
             </NavLink>
           </li>
 
-          <li className="nav-item">
-            <NavLink className="nav-link bg-danger" to="/logOut">
+          <li className="nav-item logOut ">
+            <NavLink className="nav-link" to="/logOut">
               LogOut
             </NavLink>
           </li>
@@ -89,19 +95,18 @@ const NavBarComponent = () => {
     }
   };
   return (
-    // <div>
     <nav
-      className={`navbar navbar-expand-lg navbar-light ${
-        loggedIn ? "bg-success" : "bg-danger"
+      className={`navbar navbar-expand-lg navbar-light fixed-top "   ${
+        loggedIn ? "connected" : "notConected"
       } `}
     >
       <div className="container-fluid">
-        <NavLink className="navbar-brand" to="/">
-          Home
+        <NavLink className="navbar-brand" id="homeLink" to="/">
+          <FontAwesomeIcon icon={faHouse} /> Home
         </NavLink>
 
         <button
-          className="navbar-toggler"
+          className="navbar-toggler "
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent"
@@ -113,11 +118,12 @@ const NavBarComponent = () => {
         </button>
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">{showLoggedIn()}</ul>
+          <ul className="navbar-nav " id="ulItemsNaveBar">
+            {showLoggedIn()}
+          </ul>
         </div>
       </div>
     </nav>
-    // </div>
   );
 };
 

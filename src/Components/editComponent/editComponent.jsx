@@ -10,6 +10,7 @@ import bizCardSchema from "../../validation/createBizCard.validation";
 import editPopUp from "./editPopUp.css";
 
 const EditCardComponent = (props) => {
+  //this values are being sent
   //   {
   //   bizName,
   //   bizDescription,
@@ -53,7 +54,6 @@ const EditCardComponent = (props) => {
     );
 
     const { error } = validatedVlue;
-    console.log(validatedVlue);
 
     if (error) {
       console.log("error", error);
@@ -81,22 +81,6 @@ const EditCardComponent = (props) => {
       dataToSend.bizImage = bizImage;
     }
     props.onEditDone(props._id, dataToSend);
-    //  else {
-    //   axios
-    //     .put("/cards", {
-    //       bizName,
-    //       bizDescription,
-    //       bizAddress,
-    //       bizPhone,
-    //     })
-    //     .then((data) => {
-    //       console.log("data from axios", data);
-    //       toast.success("🦄 card created  successfully!");
-    //     })
-    //     .catch((err) => {
-    //       console.log("err from axios", err);
-    //     });
-    // }
   };
   const handeleCancelClick = () => {
     props.onCancel();
@@ -177,12 +161,10 @@ const EditCardComponent = (props) => {
 
         <div className="d-flex p-2 justify-content-around">
           <button className="btn btn-success" onClick={handeleConfirmClick}>
-            {/* <FontAwesomeIcon icon="fa-solid fa-check" /> */}
             <FontAwesomeIcon icon={faCheck} />
           </button>
           <button className="btn btn-danger" onClick={handeleCancelClick}>
             <FontAwesomeIcon icon={faXmark} />
-            {/* Cancel edit */}
           </button>
         </div>
       </form>

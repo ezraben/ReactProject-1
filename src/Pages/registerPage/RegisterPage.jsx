@@ -2,8 +2,8 @@ import RegisterComponent from "../../Components/registerComponent/Register.compo
 
 const RegisterPage = () => {
   return (
-    <div>
-      <h1>heder from register page</h1>
+    <div className="topSpaceFromNav">
+      <h1>Please register</h1>
       <RegisterComponent />
     </div>
   );

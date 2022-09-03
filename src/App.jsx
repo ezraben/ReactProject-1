@@ -42,6 +42,7 @@ function App() {
         <Route path="/deshbord">
           <DashbordPage />
         </Route>
+
         <Route path="/logOut">
           <LogOutPage />
         </Route>

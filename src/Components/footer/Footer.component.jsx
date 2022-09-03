@@ -1,6 +1,9 @@
 import { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
 
 import FooterCss from "./footerCss.css";
 
@@ -12,12 +15,7 @@ const FooterComponent = () => {
     if (userData.email && userData.biz === true) {
       return (
         <Fragment>
-          {/* <li className="nav-item">
-            <NavLink className="nav-link" to="/">
-              {userData.email}
-            </NavLink>
-          </li> */}
-          <li className="nav-item">
+          <li className="nav-item ">
             <NavLink className="nav-link" to="deshbord">
               Dashbord
             </NavLink>
@@ -32,8 +30,9 @@ const FooterComponent = () => {
               about
             </NavLink>
           </li>
-          <li className="nav-item">
+          <li className="nav-item ">
             <NavLink className="nav-link" to="/logOut">
+              <FontAwesomeIcon icon={faArrowRightFromBracket} />
               LogOut
             </NavLink>
           </li>
@@ -43,13 +42,7 @@ const FooterComponent = () => {
     if (userData.email && userData.biz === false) {
       return (
         <Fragment>
-          {/* <li className="nav-item">
-            <NavLink className="nav-link" to="/">
-              {userData.email}
-            </NavLink>
-          </li> */}
-
-          <li className="nav-item">
+          <li className="nav-item ">
             <NavLink className="nav-link" to="/logOut">
               LogOut
             </NavLink>
@@ -65,14 +58,24 @@ const FooterComponent = () => {
       return (
         <Fragment>
           <li className="nav-item">
-            <NavLink className="nav-link" to="login">
+            <NavLink className="nav-link" to="/login">
               Login
             </NavLink>
           </li>
 
           <li className="nav-item">
-            <NavLink className="nav-link" to="register">
+            <NavLink className="nav-link" to="/register">
               Register
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/bizRegister">
+              business register
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/about">
+              About us
             </NavLink>
           </li>
         </Fragment>
@@ -80,14 +83,14 @@ const FooterComponent = () => {
     }
   };
   return (
-    // <div>
     <nav
-      className={`navbar navbar-expand-lg navbar-light footer ${
-        loggedIn ? "bg-success" : "bg-danger"
+      className={`navbar navbar-expand-lg navbar-light footer  fixed-bottom  ${
+        loggedIn ? "connected" : "notConected"
       } `}
     >
       <div className="container-fluid">
-        <NavLink className="navbar-brand" to="/">
+        <NavLink className="navbar-brand" id="homeLink" to="/">
+          <FontAwesomeIcon icon={faHouse} />
           Home
         </NavLink>
         <button
@@ -102,11 +105,12 @@ const FooterComponent = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">{showLoggedIn()}</ul>
+          <ul className="navbar-nav" id="ulItemsNaveBar">
+            {showLoggedIn()}
+          </ul>
         </div>
       </div>
     </nav>
-    // </div>
   );
 };
 
